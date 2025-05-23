@@ -1,22 +1,25 @@
+// src/app/events/past/page.tsx
 import ButtonCard from '@/components/ButtonCard';
-import prisma from '@/lib/prisma';
+import { getEventsByCategory } from '@/data/events';
 
-export default async function PastEvents() {
-  const events = await prisma.event.findMany({
-    where: { category: 'past' },
-  });
+export default function PastEvents() {
+  const pastEvents = getEventsByCategory('past');
 
   return (
-    <div className="container mx-auto py-12">
+    <div className="ml-64 container mx-auto py-12">
       <h2 className="text-3xl font-bold mb-6 text-center">Past Events</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {events.map((event) => (
+      <div className="flex flex-wrap justify-center gap-6">
+        {pastEvents.map((event) => (
           <ButtonCard
             key={event.id}
+            id={event.id}
             title={event.title}
-            description={event.description ?? 'Relive the moments!'}
-            image={event.image ?? '/images/default-event.jpg'}
-            link={`/events/past/${event.id}`}
+            description={event.description}
+            image={event.image}
+            date={event.date}
+            location={event.location}
+            category={event.category}
+            link={event.link || `/events/past/${event.id}`}
           />
         ))}
       </div>

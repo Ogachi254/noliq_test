@@ -1,47 +1,59 @@
+// src/components/EventCard.tsx
 import Link from 'next/link';
-import { useUser } from '@clerk/nextjs';
+import Image from 'next/image';
 
 interface EventCardProps {
   id: number;
   title: string;
-  description?: string;
+  description: string;
+  image: string;
   date: string;
   location: string;
   category: string;
-  priceId?: string | null; // Changed to allow null
+  priceId?: string;
 }
 
 export default function EventCard({
   id,
   title,
   description,
+  image,
   date,
   location,
   category,
-  priceId,
+  priceId
 }: EventCardProps) {
-  const { isSignedIn } = useUser();
-
   return (
-    <div className="bg-white shadow-md rounded-lg p-6 m-4 w-80">
-      <h3 className="text-xl font-semibold">{title}</h3>
-      <p className="text-sm text-gray-600">{description}</p>
-      <p className="text-sm">Date: {date}</p>
-      <p className="text-sm">Location: {location}</p>
-      {priceId && isSignedIn && (
-        <form action={`/api/stripe/checkout`} method="POST">
-          <input type="hidden" name="priceId" value={priceId} />
-          <button
-            type="submit"
-            className="mt-4 bg-accent text-dark py-2 px-4 rounded hover:bg-opacity-80"
+    <div className="bg-white rounded-lg shadow-md overflow-hidden w-80 m-4 transition-transform hover:scale-105">
+      <Image
+        src={image}
+        alt={title}
+        width={400}
+        height={200}
+        className="w-full h-48 object-cover"
+      />
+      <div className="p-6">
+        <h3 className="text-xl font-semibold mb-2 truncate">{title}</h3>
+        <p className="text-sm text-gray-600 mb-2">{date}</p>
+        <p className="text-sm text-gray-600 mb-2">{location}</p>
+        <p className="text-sm text-gray-600 mb-2 capitalize">Category: {category}</p>
+        <p className="text-sm text-gray-600 mb-4 line-clamp-3">{description}</p>
+        {priceId ? (
+          <Link 
+            href={`/book/${id}`}
+            className="block text-center bg-accent text-dark py-2 px-4 rounded hover:bg-opacity-80 text-sm transition-colors"
           >
             Book Now
-          </button>
-        </form>
-      )}
-      <Link href={`/events/${category}/${id}`} className="text-sm text-accent hover:underline">
-        View Details
-      </Link>
+          </Link>
+        ) : (
+          <Link 
+            href={`/events/${category}/${id}`}
+            className="block text-center bg-accent text-dark py-2 px-4 rounded hover:bg-opacity-80 text-sm transition-colors"
+          >
+            View Details
+          </Link>
+        )}
+      </div>
     </div>
   );
 }

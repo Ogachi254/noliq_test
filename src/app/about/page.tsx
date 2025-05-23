@@ -14,13 +14,13 @@ export default function About() {
           </p>
         </section>
 
-        {/* Story Section */}
+        {/* Story Section with Local CEO Image */}
         <section className="bg-white rounded-xl shadow-lg p-8 mb-16">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
               <h2 className="text-3xl font-bold mb-6 text-dark">Meet Our Founder</h2>
               <p className="text-lg text-gray-700 mb-6">
-                In 2022, I started Atlanta is go-to mobile non-alcoholic bar—serving bold, beautiful drinks without the booze. My mission was simple: to make the social scene more inclusive, sophisticated, and fun for everyone, regardless of what is in their glass.
+                In 2022, I started Atlanta&apos;s go-to mobile non-alcoholic bar—serving bold, beautiful drinks without the booze. My mission was simple: to make the social scene more inclusive, sophisticated, and fun for everyone, regardless of what is in their glass.
               </p>
               <p className="text-gray-600 mb-6">
                 I mixed handcrafted cocktails, curated unforgettable zero-proof experiences, and helped bars, restaurants, and event planners reimagine what a great drink could be.
@@ -38,21 +38,22 @@ export default function About() {
             </div>
             <div className="rounded-xl overflow-hidden aspect-square">
               <Image
-                src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80"
-                alt="Founder portrait"
-                width={687}
-                height={687}
+                src="/images/ceo.jpg"
+                alt="Our Founder"
+                width={600}
+                height={600}
                 className="w-full h-full object-cover"
+                priority
               />
             </div>
           </div>
         </section>
 
-        {/* CTA - Fixed Version */}
+        {/* CTA Section */}
         <section className="bg-[#121212] text-white rounded-xl p-12 text-center mb-16">
           <h2 className="text-3xl font-bold mb-4">Welcome to Our New Website</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
-            We have created this space to help you explore intentional, alcohol-free travel with unforgettable experiences worldwide.
+            We&apos;ve created this space to help you explore intentional, alcohol-free travel with unforgettable experiences worldwide.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <button className="bg-[#29AB87] hover:bg-[#1f8a6d] text-white font-bold py-3 px-8 rounded-lg transition duration-300">
