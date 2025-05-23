@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function About() {
   return (
     <div className="container mx-auto py-12 px-4">
@@ -18,7 +20,7 @@ export default function About() {
             <div>
               <h2 className="text-3xl font-bold mb-6 text-dark">Meet Our Founder</h2>
               <p className="text-lg text-gray-700 mb-6">
-                In 2022, I started Atlanta's go-to mobile non-alcoholic bar—serving bold, beautiful drinks without the booze. My mission was simple: to make the social scene more inclusive, sophisticated, and fun for everyone, regardless of what is in their glass.
+                In 2022, I started Atlanta is go-to mobile non-alcoholic bar—serving bold, beautiful drinks without the booze. My mission was simple: to make the social scene more inclusive, sophisticated, and fun for everyone, regardless of what is in their glass.
               </p>
               <p className="text-gray-600 mb-6">
                 I mixed handcrafted cocktails, curated unforgettable zero-proof experiences, and helped bars, restaurants, and event planners reimagine what a great drink could be.
@@ -35,9 +37,11 @@ export default function About() {
               <p className="text-accent font-bold text-lg">This is THE new... Travel well. Stay present. Come alive.</p>
             </div>
             <div className="rounded-xl overflow-hidden aspect-square">
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80"
                 alt="Founder portrait"
+                width={687}
+                height={687}
                 className="w-full h-full object-cover"
               />
             </div>

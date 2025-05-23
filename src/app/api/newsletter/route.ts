@@ -5,11 +5,11 @@ export async function POST(req: Request) {
   try {
     const { email } = await req.json();
 
-    const subscriber = await prisma.subscriber.create({
+    const newsletter = await prisma.newsletter.create({
       data: { email },
     });
 
-    return NextResponse.json({ success: true, subscriber }, { status: 201 });
+    return NextResponse.json({ success: true, newsletter }, { status: 201 });
   } catch {
     return NextResponse.json({ success: false, error: 'Failed to subscribe' }, { status: 500 });
   }

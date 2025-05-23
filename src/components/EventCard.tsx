@@ -8,7 +8,7 @@ interface EventCardProps {
   date: string;
   location: string;
   category: string;
-  priceId?: string;
+  priceId?: string | null; // Changed to allow null
 }
 
 export default function EventCard({

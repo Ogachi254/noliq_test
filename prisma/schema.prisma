@@ -8,26 +8,26 @@ datasource db {
 }
 
 model Event {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   title       String
   description String?
   date        DateTime
   location    String
-  category    String   @default("upcoming") // past, booked, upcoming
-  priceId     String?  // Stripe price ID for bookable events
-  image       String?  // Image URL for events
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  creatorId   String?  // Clerk user ID
+  category    String    @default("upcoming")
+  priceId     String?
+  image       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  creatorId   String?
   bookings    Booking[]
 }
 
 model Booking {
-  id          Int      @id @default(autoincrement())
-  eventId     Int
-  userId      String   // Clerk user ID
-  createdAt   DateTime @default(now())
-  event       Event    @relation(fields: [eventId], references: [id])
+  id        Int      @id @default(autoincrement())
+  eventId   Int
+  userId    String
+  createdAt DateTime @default(now())
+  event     Event    @relation(fields: [eventId], references: [id])
 }
 
 model Newsletter {
