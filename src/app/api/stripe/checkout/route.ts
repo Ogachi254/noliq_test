@@ -16,11 +16,12 @@ export async function POST(req: Request) {
     }
 
     // Check if user exists in the database, create if not
-    const existingUser = await prisma.user.findUnique({
+    const existingUser = await prisma.User.findUnique({
       where: { id: user.id },
     });
+
     if (!existingUser) {
-      await prisma.user.create({
+      await prisma.User.create({
         data: {
           id: user.id,
           email: user.emailAddresses[0].emailAddress,
@@ -51,12 +52,12 @@ export async function POST(req: Request) {
       cancel_url: `${req.headers.get('origin')}/events/upcoming`,
       metadata: {
         userId: user.id,
-        eventId: '1', // Hardcoded for the single upcoming event
+        eventId: '1', // TODO: Make dynamic later if needed
       },
     });
 
     // Save booking to database
-    await prisma.booking.create({
+    await prisma.Booking.create({
       data: {
         eventId: 1,
         userId: user.id,
@@ -65,7 +66,8 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ sessionId: session.id });
-  } catch {
+  } catch (error) {
+    console.error('Checkout error:', error);
     return NextResponse.json({ error: 'Failed to create checkout session' }, { status: 500 });
   }
 }
