@@ -1,17 +1,23 @@
 import { NextResponse } from 'next/server';
-import stripe from '@/lib/stripe';
 import { currentUser } from '@clerk/nextjs/server';
-import prisma from '@/lib/prisma';
+import Stripe from 'stripe';
 
-export async function POST(request: Request) {
-  const { priceId } = await request.json();
-  const user = await currentUser();
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2023-10-16',
+});
 
-  if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
+export async function POST(req: Request) {
   try {
+    const user = await currentUser();
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const { priceId } = await req.json();
+    if (!priceId) {
+      return NextResponse.json({ error: 'Price ID is required' }, { status: 400 });
+    }
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -21,24 +27,15 @@ export async function POST(request: Request) {
         },
       ],
       mode: 'payment',
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard?success=true`,
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/events/upcoming`,
-      metadata: { userId: user.id },
+      success_url: `${req.headers.get('origin')}/events/booked?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${req.headers.get('origin')}/events/upcoming`,
+      metadata: {
+        userId: user.id,
+      },
     });
 
-    // Save booking to database
-    const event = await prisma.event.findFirst({ where: { priceId } });
-    if (event) {
-      await prisma.booking.create({
-        data: {
-          eventId: event.id,
-          userId: user.id,
-        },
-      });
-    }
-
-    return NextResponse.json({ url: session.url });
-  } catch (error) {
+    return NextResponse.json({ sessionId: session.id });
+  } catch {
     return NextResponse.json({ error: 'Failed to create checkout session' }, { status: 500 });
   }
 }

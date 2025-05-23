@@ -3,7 +3,7 @@ import { useUser } from '@clerk/nextjs';
 
 interface EventCardProps {
   id: number;
-  title: String;
+  title: string;
   description?: string;
   date: string;
   location: string;

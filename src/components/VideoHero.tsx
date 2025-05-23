@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function VideoHero() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -31,8 +32,7 @@ export default function VideoHero() {
   }, []);
 
   return (
-    <div className="relative w-full h-screen min-h-[500px] bg-black">
-      {/* Video Element */}
+    <div className="relative w-full aspect-video bg-black">
       <video
         ref={videoRef}
         autoPlay
@@ -46,7 +46,6 @@ export default function VideoHero() {
         <source src={videoUrl} type="video/mp4" />
       </video>
 
-      {/* Content Overlay with Link */}
       <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/40">
         <div className="text-center max-w-4xl px-4">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
@@ -61,11 +60,12 @@ export default function VideoHero() {
         </div>
       </div>
 
-      {/* Fallback Image */}
       {hasError && (
-        <img
+        <Image
           src="/images/fallback-hero.jpg"
           alt="Event background"
+          width={1920} // Adjust based on your image dimensions
+          height={1080}
           className="absolute inset-0 w-full h-full object-cover z-0"
         />
       )}

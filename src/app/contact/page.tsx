@@ -170,7 +170,7 @@ export default function Contact() {
                 ></iframe>
               </div>
               <p className="mt-4 text-gray-600">
-                While we're based in San Francisco, our virtual office means we can assist you no matter where you're located.
+                While we are based in San Francisco, our virtual office means we can assist you no matter where you are located.
                 Schedule a video call with our team below.
               </p>
               <button className="mt-4 w-full bg-dark hover:bg-gray-800 text-white font-bold py-3 px-4 rounded-lg transition duration-300">
